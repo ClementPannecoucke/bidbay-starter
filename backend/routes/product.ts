@@ -15,7 +15,26 @@ router.get('/api/products', async (_req, res, next) => {
 })
 
 router.get('/api/products/:productId', async (req, res) => {
-  res.status(600).send()
+  const product = await Product.findOne({
+    where: { id: req.params["productId"]},
+    include : [{model: User, as: 'seller'}, {model: Bid, as: 'bids'}]
+  })
+
+  if(product){
+    res.status(200).json({
+        "id": product.id,
+        "name": product.name,
+        "description": product.description,
+        "category": product.category,
+        "originalPrice": product.originalPrice,
+        "pictureUrl":product.pictureUrl,
+        "endDate": product.endDate,
+        "seller": product.seller,
+        "bids": product.bids
+    })
+  }else{
+    res.status(404).json({"error": "Product not found"})
+  }
 })
 
 // You can use the authMiddleware with req.user.id to authenticate your endpoint ;)
