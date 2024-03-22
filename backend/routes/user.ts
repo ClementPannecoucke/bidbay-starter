@@ -4,6 +4,7 @@ import { User, Product, Bid } from '../orm/index.js'
 const router = express.Router()
 
 router.get('/api/users/:userId', async (req, res) => {
+  //...
   const user = await User.findOne({
     where: { id: req.params["userId"]},
     include : [{model: Product, as: 'products'}, {model: Bid, as: 'bids'}]
