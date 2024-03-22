@@ -5,8 +5,13 @@ import { getDetails } from '../validators/index.js'
 
 const router = express.Router()
 
-router.get('/api/products', async (req, res, next) => {
-  res.status(600).send()
+router.get('/api/products', async (_req, res, next) => {
+  try {
+    const products = await Product.findAll({});
+    res.status(200).json(products);
+  } catch (e : unknown){
+    res.status(400).json(e);
+  }
 })
 
 router.get('/api/products/:productId', async (req, res) => {
