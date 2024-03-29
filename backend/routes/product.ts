@@ -5,37 +5,44 @@ import { getDetails } from '../validators/index.js'
 
 const router = express.Router()
 
-router.get('/api/products', async (_req, res, next) => {
+router.get('/api/products', async (req, res) => {
   try {
-    const products = await Product.findAll({});
-    res.status(200).json(products);
-  } catch (e : unknown){
-    res.status(400).json(e);
+    const products = await Product.findAll({
+      include : [{model: User, as: 'seller'}, {model: Bid, as: 'bids'}]
+    });
+
+    if (products) {
+      res.status(200).json(products);
+    } else {
+      res.status(404).json({"error": "Products not found"});
+    }
+  } catch (error) {
+    res.status(500).send(error);
   }
-})
+});
 
-router.get('/api/products/:productId', async (req, res) => {
-  const product = await Product.findOne({
-    where: { id: req.params["productId"]},
-    include : [{model: User, as: 'seller'}, {model: Bid, as: 'bids'}]
-  })
+router.post('/api/products',(req, res) => {
+  const { name, description, category, originalPrice, pictureUrl, endDate, sellerId } = req.body;
 
-  if(product){
-    res.status(200).json({
-        "id": product.id,
-        "name": product.name,
-        "description": product.description,
-        "category": product.category,
-        "originalPrice": product.originalPrice,
-        "pictureUrl":product.pictureUrl,
-        "endDate": product.endDate,
-        "seller": product.seller,
-        "bids": product.bids
+  const newProduct = {
+    name,
+    description,
+    category,
+    originalPrice,
+    pictureUrl,
+    endDate,
+    sellerId
+  };
+
+  Product.create(newProduct)
+    .then((product) => {
+      res.status(201).json(product);
     })
-  }else{
-    res.status(404).json({"error": "Product not found"})
-  }
-})
+    .catch((error) => {
+      res.status(401).send(error);
+    });
+});
+
 
 // You can use the authMiddleware with req.user.id to authenticate your endpoint ;)
 
