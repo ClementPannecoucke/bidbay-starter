@@ -1,59 +1,67 @@
 import authMiddleware from '../middlewares/auth.js'
-import { Bid, Product, User } from '../orm/index.js'
-
-import express from 'express'
-import { getDetails } from '../validators/index.js'
-import { Request } from 'express';
-import { Token } from 'types/types.js';
+import { Bid, Product } from '../orm/index.js'
+import express, { Request } from "express";
+import { Token } from "../types/types";
 
 const router = express.Router()
 
-router.delete('/api/bids/:bidId', async (req, res) => {
-  const bid = await Bid.findOne({
-    where: { id: req.params["bidId"]},
-    include : [
-      {model: User, as: 'users', attributes:["id", "username", "email", "password", "admin", "products", "bids"]}]
-  })
+router.delete('/api/bids/:bidId', authMiddleware, async (req: Request & { user?: Token }, res) => {
+  const bid: Bid | null = await Bid.findOne({
+    where: { id: req.params['bidId'] }
+  });
 
-  //TODO
-  if(bid){
-    res.status(200)
-  }else{
-    res.status(404).json({"error": "User not found"})
-  }
+  if(!bid)
+    return res.status(404).json(
+      {
+        'error': 'Bid not found'
+      }
+    );
+
+  if(bid.bidderId !== req.user!.id && !req.user!.admin)
+    return res.status(403).json(
+      {
+        'error': 'Forbidden'
+      }
+    );
+
+  await bid.destroy();
+
+  res.status(204).json();
 })
 
-router.post('/api/products/:productId/bids', authMiddleware, async (req: Request<Record<string,string>, any, any> & {user?: Token}, res) => {
-  const price: number = + req.body["price"]
-  if(Number.isNaN(price) || !(price>0)){
-    res.status(400).json(
+router.post('/api/products/:productId/bids', authMiddleware, async (req: Request & { user?: Token }, res) => {
+  const price: number = + req.body['price'];
+
+  if(Number.isNaN(price) || !(price > 0))
+    return res.status(400).json(
+      {
+        'error': 'Invalid or missing fields',
+        'details': [ 'price' ]
+      }
+    );
+
+  const product: Product | null = await Product.findOne({
+    where: { id: req.params['productId'] }
+  });
+
+  if(!product)
+    return res.status(404).json(
+      {
+        'error': 'Product not found'
+      }
+    );
+
+  const bid: Bid = await Bid.create({ productId: req.params['productId'], bidderId: req.user!.id, price: price, date: Date.now() });
+
+  res.status(201).json(
     {
-      "error": "Invalid or missing fields",
-	    "details": ["price"]
-    })
-  }
-
-  const product = await Product.findOne({
-    where: { id: req.params["productId"]}
-  })
-
-  if(product){
-    const newBid = await Bid.create({
-      "productId": req.params["productId"],
-      "price": price,
-      "date": Date.now,
-      "bidderId":req.user!.id
-    })
-    res.status(201).json({
-      "id": newBid.id,
-      "productId": newBid.productId,
-      "price": newBid.price,
-      "date": newBid.date,
-      "bidderId":newBid.bidderId
-    })
-  }else{
-    res.status(404).json({"error": "Product not found"})
-  }
+      id: bid.id,
+      productId: bid.productId,
+      price: bid.price,
+      date: bid.date,
+      bidderId: bid.bidderId
+    }
+  );
 })
 
 export default router
