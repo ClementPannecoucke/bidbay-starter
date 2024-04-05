@@ -1,7 +1,13 @@
 import authMiddleware from '../middlewares/auth.js'
+<<<<<<< HEAD
 import { Bid, Product, User } from '../orm/index.js'
+=======
+import { Bid, Product } from '../orm/index.js'
+>>>>>>> aa4e72c2169ebca46db71271aeb20d85615a6887
 import express from 'express'
 import { getDetails } from '../validators/index.js'
+import { Request } from 'express';
+import { Token } from 'types/types.js';
 
 const router = express.Router()
 
@@ -20,8 +26,9 @@ router.delete('/api/bids/:bidId', async (req, res) => {
   }
 })
 
-router.post('/api/products/:productId/bids', authMiddleware, async (req, res) => {
-  if(!req.body["price"]){
+router.post('/api/products/:productId/bids', authMiddleware, async (req: Request<Record<string,string>, any, any> & {user?: Token}, res) => {
+  const price: number = + req.body["price"]
+  if(Number.isNaN(price) || !(price>0)){
     res.status(400).json(
     {
       "error": "Invalid or missing fields",
@@ -35,10 +42,10 @@ router.post('/api/products/:productId/bids', authMiddleware, async (req, res) =>
 
   if(product){
     const newBid = await Bid.create({
-      "productId": product.id,
-      "price": product.originalPrice,
-      "date": product.endDate,
-      "bidderId":product.bids
+      "productId": req.params["productId"],
+      "price": price,
+      "date": Date.now,
+      "bidderId":req.user!.id
     })
     res.status(201).json({
       "id": newBid.id,

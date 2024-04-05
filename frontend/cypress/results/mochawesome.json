@@ -1,24 +1,24 @@
 {
   "stats": {
-    "suites": 1,
-    "tests": 1,
-    "passes": 0,
+    "suites": 4,
+    "tests": 8,
+    "passes": 5,
     "pending": 0,
-    "failures": 1,
-    "start": "2024-03-29T13:14:05.325Z",
-    "end": "2024-03-29T13:14:06.164Z",
-    "duration": 839,
+    "failures": 3,
+    "start": "2024-04-05T14:08:30.949Z",
+    "end": "2024-04-05T14:09:26.458Z",
+    "duration": 55509,
     "testsRegistered": 31,
-    "passPercent": 0,
+    "passPercent": 16.129032258064516,
     "pendingPercent": 0,
     "other": 0,
     "hasOther": false,
-    "skipped": 30,
+    "skipped": 23,
     "hasSkipped": true
   },
   "results": [
     {
-      "uuid": "3f41b8a3-ca4c-49e3-b812-b99b989917e8",
+      "uuid": "28baf99d-392a-49e0-a952-54636607eb9b",
       "title": "",
       "fullFile": "cypress\\e2e\\backend\\endpoints.cy.js",
       "file": "cypress\\e2e\\backend\\endpoints.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "75bcd4d4-62fc-41bc-aaa5-d58f26a8be9c",
+          "uuid": "e9e6c02f-7460-4d03-aa2e-37dcd7484758",
           "title": "GET /api/products",
           "fullFile": "",
           "file": "",
@@ -38,39 +38,35 @@
               "title": "returns 200 - success",
               "fullTitle": "GET /api/products returns 200 - success",
               "timedOut": null,
-              "duration": 778,
-              "state": "failed",
-              "speed": null,
-              "pass": false,
-              "fail": true,
+              "duration": 1276,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
               "pending": false,
               "context": null,
               "code": "cy.request(endpoint).then(response => {\n  expect(response.status).to.be.eq(200);\n  expect(response.headers[\"content-type\"]).to.contains(\"application/json\");\n  for (let product of response.body) {\n    expect(product.id).to.be.a(\"string\");\n    expect(product.id).to.be.match(_pattern.UUIDv4);\n    expect(product.name).to.be.a(\"string\");\n    expect(product.description).to.be.a(\"string\");\n    expect(product.category).to.be.a(\"string\");\n    expect(product.originalPrice).to.be.a(\"number\");\n    expect(product.pictureUrl).to.be.a(\"string\");\n    expect(product.endDate).to.be.a(\"string\");\n    expect(product.endDate).to.match(_pattern.IOS8601);\n    expect(product.seller.id).to.be.a(\"string\");\n    expect(product.seller.username).to.be.a(\"string\");\n    for (let bid of product.bids) {\n      expect(bid.id).to.be.a(\"string\");\n      expect(bid.id).to.match(_pattern.UUIDv4);\n      expect(bid.price).to.be.a(\"number\");\n      expect(bid.date).to.be.a(\"string\");\n      expect(bid.date).to.match(_pattern.IOS8601);\n    }\n    const fixtureProduct = response.body.find(item => {\n      return item.id === \"a0f7c522-78f8-442e-a55d-642cfe566634\";\n    });\n    expect(fixtureProduct.id).to.be.eq(\"a0f7c522-78f8-442e-a55d-642cfe566634\");\n    expect(fixtureProduct.name).to.be.eq(\"Lot de casseroles\");\n    expect(fixtureProduct.description).to.be.eq(\"Ensemble de casseroles de qualité supérieure pour répondre à tous vos besoins culinaires.\");\n    expect(fixtureProduct.category).to.be.eq(\"Cuisine\");\n    expect(fixtureProduct.originalPrice).to.be.eq(40);\n    expect(fixtureProduct.pictureUrl).to.be.eq(\"https://image.noelshack.com/fichiers/2023/12/4/1679526253-65535-51812547429-fe1cc0d832-c-512-512-nofilter.jpg\");\n    expect(fixtureProduct.seller.id).to.be.eq(_tokens.aliceId);\n    expect(fixtureProduct.seller.username).to.be.eq(\"alice\");\n    expect(fixtureProduct.bids.some(bid => bid.price === 65)).to.be.true;\n  }\n});",
-              "err": {
-                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.",
-                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.\n    at <unknown> (http://localhost:62740/__cypress/runner/cypress_runner.js:133151:70)\n    at tryCatcher (http://localhost:62740/__cypress/runner/cypress_runner.js:1807:23)\n    at <unknown> (http://localhost:62740/__cypress/runner/cypress_runner.js:4203:37)\n    at tryCatcher (http://localhost:62740/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:62740/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:62740/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:62740/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:62740/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:62740/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:62740/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:62740/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:62740/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:13:5)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:3000\n      at new r (<embedded>:1831:404877)\n      at ee.callback (<embedded>:1831:410878)\n      at e.callback.s.callback [as _callback] (<embedded>:1831:410324)\n      at s._callback.s.callback.s.callback (<embedded>:2049:91633)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:2049:100575)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
-                "diff": null
-              },
-              "uuid": "e132c196-718e-4a14-8e8e-ba01af006738",
-              "parentUUID": "75bcd4d4-62fc-41bc-aaa5-d58f26a8be9c",
+              "err": {},
+              "uuid": "141c6bc6-87ed-48b8-9bb3-59c35937244c",
+              "parentUUID": "e9e6c02f-7460-4d03-aa2e-37dcd7484758",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
-          "passes": [],
-          "failures": [
-            "e132c196-718e-4a14-8e8e-ba01af006738"
+          "passes": [
+            "141c6bc6-87ed-48b8-9bb3-59c35937244c"
           ],
+          "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 778,
+          "duration": 1276,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "e1ef1acd-5a56-4cd6-acac-eac8afc5a2c8",
+          "uuid": "de6852b9-d749-4e4c-82ef-dea5ad6106f8",
           "title": "POST /api/products",
           "fullFile": "",
           "file": "",
@@ -81,92 +77,92 @@
               "title": "returns 401 - not authorized",
               "fullTitle": "POST /api/products returns 401 - not authorized",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
-              "speed": null,
-              "pass": false,
+              "duration": 243,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "cy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products\",\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  body: {\n    name: \"New Product\",\n    description: \"This is a new product\",\n    category: \"Electronics\",\n    originalPrice: 99,\n    pictureUrl: \"https://example.com/product.jpg\",\n    endDate: \"2023-04-01T00:00:00.000Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
               "err": {},
-              "uuid": "7a1fa589-a811-47ca-b362-8dc73ae9e051",
-              "parentUUID": null,
+              "uuid": "3eb1e1bc-436c-4e7f-85b0-3c8d30c7181e",
+              "parentUUID": "de6852b9-d749-4e4c-82ef-dea5ad6106f8",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             },
             {
               "title": "returns 201 - created",
               "fullTitle": "POST /api/products returns 201 - created",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
-              "speed": null,
-              "pass": false,
+              "duration": 215,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: \"New Product\",\n    description: \"This is a new product\",\n    category: \"Electronics\",\n    originalPrice: 99,\n    pictureUrl: \"https://example.com/product.jpg\",\n    endDate: \"2023-04-01T00:00:00.000Z\"\n  }\n}).then(response => {\n  // Assert that the response is as expected\n  expect(response.status).to.eq(201);\n  expect(response.body.id).to.be.match(_pattern.UUIDv4);\n  expect(response.body.name).to.eq(\"New Product\");\n  expect(response.body.description).to.eq(\"This is a new product\");\n  expect(response.body.category).to.eq(\"Electronics\");\n  expect(response.body.originalPrice).to.eq(99);\n  expect(response.body.pictureUrl).to.eq(\"https://example.com/product.jpg\");\n  expect(response.body.endDate).to.eq(\"2023-04-01T00:00:00.000Z\");\n  expect(response.body.sellerId).to.eq(_tokens.aliceId);\n});",
               "err": {},
-              "uuid": "fb2a46fb-b8b0-4082-9fc2-1512d63e9c32",
-              "parentUUID": null,
+              "uuid": "371a13f6-4262-4624-908b-c5dd19701a3f",
+              "parentUUID": "de6852b9-d749-4e4c-82ef-dea5ad6106f8",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             },
             {
               "title": "returns 400 - missing or invalid fields",
               "fullTitle": "POST /api/products returns 400 - missing or invalid fields",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
-              "speed": null,
-              "pass": false,
+              "duration": 212,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    // Missing name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).then(req => {\n  expect(req.status).to.be.eq(400);\n  expect(req.body.error).to.be.eq(\"Invalid or missing fields\");\n  expect(req.body.details).to.exist;\n});",
               "err": {},
-              "uuid": "3b4f7428-5e3e-4e30-83f8-052a94eaffd6",
-              "parentUUID": null,
+              "uuid": "dcc54285-512f-4165-80c2-676e6c5f6600",
+              "parentUUID": "de6852b9-d749-4e4c-82ef-dea5ad6106f8",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             },
             {
               "title": "check mutation - object created in database",
               "fullTitle": "POST /api/products check mutation - object created in database",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
-              "speed": null,
-              "pass": false,
+              "duration": 265,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
               "code": "// Create a new product\n(0, _orm.getProducts)().then(({\n  products: productsBeforeCreation\n}) => {\n  (0, _orm.createProduct)().then(({\n    product\n  }) => {\n    (0, _orm.getProducts)().then(({\n      products: productsAfterCreation\n    }) => {\n      const newProducts = productsAfterCreation.filter(product => productsBeforeCreation.every(existingProduct => existingProduct.id !== product.id));\n      expect(newProducts.length).to.be.eq(1);\n      const newProduct = newProducts[0];\n      expect(newProduct.id).to.be.match(_pattern.UUIDv4);\n      expect(newProduct.name).to.eq(name);\n      expect(newProduct.description).to.eq(product.description);\n      expect(newProduct.category).to.eq(product.category);\n      expect(newProduct.originalPrice).to.eq(product.originalPrice);\n      expect(newProduct.pictureUrl).to.eq(product.pictureUrl);\n      expect(newProduct.endDate).to.eq(product.endDate);\n      expect(newProduct.seller.id).to.eq(_tokens.aliceId);\n      expect(newProduct.seller.username).to.eq(\"alice\");\n    });\n  });\n});",
               "err": {},
-              "uuid": "2bfd0964-54c9-4681-943d-887deeb8db0e",
-              "parentUUID": null,
+              "uuid": "b08d71a4-47cc-4a1c-b5ca-a551e8f07158",
+              "parentUUID": "de6852b9-d749-4e4c-82ef-dea5ad6106f8",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             }
           ],
           "suites": [],
-          "passes": [],
+          "passes": [
+            "3eb1e1bc-436c-4e7f-85b0-3c8d30c7181e",
+            "371a13f6-4262-4624-908b-c5dd19701a3f",
+            "dcc54285-512f-4165-80c2-676e6c5f6600",
+            "b08d71a4-47cc-4a1c-b5ca-a551e8f07158"
+          ],
           "failures": [],
           "pending": [],
-          "skipped": [
-            "7a1fa589-a811-47ca-b362-8dc73ae9e051",
-            "fb2a46fb-b8b0-4082-9fc2-1512d63e9c32",
-            "3b4f7428-5e3e-4e30-83f8-052a94eaffd6",
-            "2bfd0964-54c9-4681-943d-887deeb8db0e"
-          ],
-          "duration": 0,
+          "skipped": [],
+          "duration": 935,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "582025fb-9e49-4b7c-808e-31f6d86c6e53",
+          "uuid": "bd2cffc4-0357-47fa-91bf-fa40f84e30f3",
           "title": "GET /api/products/:productId",
           "fullFile": "",
           "file": "",
@@ -177,54 +173,62 @@
               "title": "returns 404 - not found",
               "fullTitle": "GET /api/products/:productId returns 404 - not found",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
+              "duration": 30298,
+              "state": "failed",
               "speed": null,
               "pass": false,
-              "fail": false,
+              "fail": true,
               "pending": false,
               "context": null,
               "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
-              "err": {},
-              "uuid": "bf262625-d058-4644-9fc0-94f12aec144c",
-              "parentUUID": null,
+              "err": {
+                "message": "CypressError: `cy.request()` timed out waiting `30000ms` for a response from your server.\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/not-existing-id\n\nNo response was received within the timeout.\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` timed out waiting `30000ms` for a response from your server.\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/not-existing-id\n\nNo response was received within the timeout.\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:133140:70)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:4186:41)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:51395/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:51395/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:51395/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:51395/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:51395/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:51395/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:185:7)",
+                "diff": null
+              },
+              "uuid": "cf99e11b-9236-45dd-80ac-ea42d4cb9309",
+              "parentUUID": "bd2cffc4-0357-47fa-91bf-fa40f84e30f3",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             },
             {
               "title": "returns 200 - success",
               "fullTitle": "GET /api/products/:productId returns 200 - success",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
+              "duration": 22031,
+              "state": "failed",
               "speed": null,
               "pass": false,
-              "fail": false,
+              "fail": true,
               "pending": false,
               "context": null,
               "code": "cy.request(endpoint).then(response => {\n  expect(response.status).to.be.eq(200);\n  expect(response.headers[\"content-type\"]).to.includes(\"application/json\");\n  const product = response.body;\n  expect(product.id).to.be.eq(\"a0f7c522-78f8-442e-a55d-642cfe566634\");\n  expect(product.name).to.be.eq(\"Lot de casseroles\");\n  expect(product.description).to.be.eq(\"Ensemble de casseroles de qualité supérieure pour répondre à tous vos besoins culinaires.\");\n  expect(product.category).to.be.eq(\"Cuisine\");\n  expect(product.originalPrice).to.be.eq(40);\n  expect(product.pictureUrl).to.be.eq(\"https://image.noelshack.com/fichiers/2023/12/4/1679526253-65535-51812547429-fe1cc0d832-c-512-512-nofilter.jpg\");\n  expect(product.seller.id).to.be.eq(_tokens.aliceId);\n  expect(product.seller.username).to.be.eq(\"alice\");\n  const bid = response.body.bids.find(bid => bid.price === 65);\n  expect(bid.id).to.be.eq(\"8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\");\n  expect(bid.bidder.id).to.be.eq(_tokens.charlyId);\n  expect(bid.bidder.username).to.be.eq(\"charly\");\n});",
-              "err": {},
-              "uuid": "52152db8-d19a-4d3d-825e-e5b9eb027bf5",
-              "parentUUID": null,
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:133151:70)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:4203:37)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:51395/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:51395/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:51395/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:51395/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:51395/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:51395/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:194:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:3000\n      at new r (<embedded>:1831:404877)\n      at ee.callback (<embedded>:1831:410878)\n      at e.callback.s.callback [as _callback] (<embedded>:1831:410324)\n      at s._callback.s.callback.s.callback (<embedded>:2049:91633)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:2049:100575)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "65443836-b915-4e51-98b2-698c2568ab5f",
+              "parentUUID": "bd2cffc4-0357-47fa-91bf-fa40f84e30f3",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             }
           ],
           "suites": [],
           "passes": [],
-          "failures": [],
-          "pending": [],
-          "skipped": [
-            "bf262625-d058-4644-9fc0-94f12aec144c",
-            "52152db8-d19a-4d3d-825e-e5b9eb027bf5"
+          "failures": [
+            "cf99e11b-9236-45dd-80ac-ea42d4cb9309",
+            "65443836-b915-4e51-98b2-698c2568ab5f"
           ],
-          "duration": 0,
+          "pending": [],
+          "skipped": [],
+          "duration": 52329,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "e7bc6f62-46f7-4cdb-96f9-60175e1e4b36",
+          "uuid": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
           "title": "PUT /api/products/:productId",
           "fullFile": "",
           "file": "",
@@ -235,19 +239,23 @@
               "title": "returns 401 - not authorized",
               "fullTitle": "PUT /api/products/:productId returns 401 - not authorized",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
+              "duration": 693,
+              "state": "failed",
               "speed": null,
               "pass": false,
-              "fail": false,
+              "fail": true,
               "pending": false,
               "context": null,
               "code": "cy.request({\n  method: \"PUT\",\n  url: endpoint,\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
-              "err": {},
-              "uuid": "913b9076-7142-4880-b4a3-571bc66b684d",
-              "parentUUID": null,
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:133151:70)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:4203:37)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:51395/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:51395/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:51395/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:51395/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:51395/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:51395/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:13:5)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:3000\n      at new r (<embedded>:1831:404877)\n      at ee.callback (<embedded>:1831:410878)\n      at e.callback.s.callback [as _callback] (<embedded>:1831:410324)\n      at s._callback.s.callback.s.callback (<embedded>:2049:91633)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:2049:100575)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "96283a5c-4a66-4d89-8f82-ca02999052fe",
+              "parentUUID": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             },
             {
               "title": "returns 200 - success, when owner edit",
@@ -262,8 +270,8 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  }\n}).its(\"status\").should(\"equal\", 200);",
               "err": {},
-              "uuid": "f116cc99-2a4c-4f31-a40f-9dc86caf4421",
-              "parentUUID": null,
+              "uuid": "f0eeb091-5b83-47d7-9f74-2daad80fa4d6",
+              "parentUUID": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
               "isHook": false,
               "skipped": true
             },
@@ -280,8 +288,8 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.bobToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 403);",
               "err": {},
-              "uuid": "ea3b6769-bb12-4a01-bcbf-13ccccf535a6",
-              "parentUUID": null,
+              "uuid": "bdec3957-fa65-4210-8026-c0bc19fef371",
+              "parentUUID": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
               "isHook": false,
               "skipped": true
             },
@@ -298,8 +306,8 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.adminToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  }\n}).its(\"status\").should(\"equal\", 200);",
               "err": {},
-              "uuid": "4a99fae9-2cb4-4aad-9691-b07ef9d8db39",
-              "parentUUID": null,
+              "uuid": "fa3eeb99-e831-47f4-8b7a-bc1485f020a7",
+              "parentUUID": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
               "isHook": false,
               "skipped": true
             },
@@ -316,8 +324,8 @@
               "context": null,
               "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
               "err": {},
-              "uuid": "4a11da05-2039-4567-a6c4-ae9a02922009",
-              "parentUUID": null,
+              "uuid": "14472bdd-d11d-46bf-8850-d42de5ea094c",
+              "parentUUID": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
               "isHook": false,
               "skipped": true
             },
@@ -334,31 +342,32 @@
               "context": null,
               "code": "const newProductData = (0, _orm.buildProduct)();\ncy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: newProductData.name,\n    description: newProductData.description,\n    pictureUrl: newProductData.pictureUrl,\n    category: newProductData.category,\n    originalPrice: newProductData.originalPrice,\n    endDate: newProductData.endDate.toISOString()\n  }\n}).then(() => {\n  cy.request(endpoint).then(response => {\n    const product = response.body;\n    expect(response.status).to.be.eq(200);\n    expect(product.id).to.be.eq(\"a0f7c522-78f8-442e-a55d-642cfe566634\");\n    expect(product.name).to.be.eq(newProductData.name);\n    expect(product.description).to.be.eq(newProductData.description);\n    expect(product.category).to.be.eq(newProductData.category);\n    expect(product.originalPrice).to.be.eq(newProductData.originalPrice);\n    expect(product.pictureUrl).to.be.eq(newProductData.pictureUrl);\n    expect(product.endDate).to.be.eq(newProductData.endDate.toISOString());\n    expect(product.seller.id).to.be.eq(_tokens.aliceId);\n    expect(product.seller.username).to.be.eq(\"alice\");\n  });\n});",
               "err": {},
-              "uuid": "93ad6e60-ad1b-47e5-9977-a8c2249c7d12",
-              "parentUUID": null,
+              "uuid": "33214037-b94f-4ef0-8d39-189d29dc69e2",
+              "parentUUID": "5cce2544-f7db-4a23-80b2-98ad6d23ac1a",
               "isHook": false,
               "skipped": true
             }
           ],
           "suites": [],
           "passes": [],
-          "failures": [],
+          "failures": [
+            "96283a5c-4a66-4d89-8f82-ca02999052fe"
+          ],
           "pending": [],
           "skipped": [
-            "913b9076-7142-4880-b4a3-571bc66b684d",
-            "f116cc99-2a4c-4f31-a40f-9dc86caf4421",
-            "ea3b6769-bb12-4a01-bcbf-13ccccf535a6",
-            "4a99fae9-2cb4-4aad-9691-b07ef9d8db39",
-            "4a11da05-2039-4567-a6c4-ae9a02922009",
-            "93ad6e60-ad1b-47e5-9977-a8c2249c7d12"
+            "f0eeb091-5b83-47d7-9f74-2daad80fa4d6",
+            "bdec3957-fa65-4210-8026-c0bc19fef371",
+            "fa3eeb99-e831-47f4-8b7a-bc1485f020a7",
+            "14472bdd-d11d-46bf-8850-d42de5ea094c",
+            "33214037-b94f-4ef0-8d39-189d29dc69e2"
           ],
-          "duration": 0,
+          "duration": 693,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "c374518d-6077-4321-8564-32c43997a908",
+          "uuid": "bdfc621d-31eb-44b3-b6cf-822dcfb8220e",
           "title": "DELETE /api/products/:productId",
           "fullFile": "",
           "file": "",
@@ -378,7 +387,7 @@
               "context": null,
               "code": "cy.request({\n  method: \"DELETE\",\n  url: endpoint,\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
               "err": {},
-              "uuid": "24288c73-eb95-4f16-821e-065e8c75b019",
+              "uuid": "cee0eafe-0d99-4430-8d9b-3c065bc31964",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -396,7 +405,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
               "err": {},
-              "uuid": "5fc12af5-dfbf-436e-898f-b34439ea22d1",
+              "uuid": "fffb4343-4704-4a75-904f-05ca37991503",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -414,7 +423,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.bobToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 403);",
               "err": {},
-              "uuid": "53f32e50-60d9-43a2-85f2-5389a9ff52c2",
+              "uuid": "3e7dc779-5793-44bc-9baa-e9de06b40d3a",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -432,7 +441,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.adminToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
               "err": {},
-              "uuid": "9dad2a29-ff72-4c2c-aa65-b501e60ccb4f",
+              "uuid": "387cb888-b874-42ec-94ef-eeaac1e85d09",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -450,7 +459,7 @@
               "context": null,
               "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
               "err": {},
-              "uuid": "0a0fa2d3-f801-409b-88df-9feb0ec3393f",
+              "uuid": "c497701c-a86a-47c8-8af3-8ede3d361665",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -468,7 +477,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"GET\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  }\n}).then(response => {\n  expect(response.status).to.be.eq(200);\n  cy.request({\n    url: endpoint,\n    method: \"DELETE\",\n    headers: {\n      Authorization: `Bearer ${_tokens.aliceToken}`\n    }\n  }).then(response => {\n    expect(response.status).to.be.eq(204);\n    cy.request({\n      url: endpoint,\n      method: \"GET\",\n      headers: {\n        Authorization: `Bearer ${_tokens.aliceToken}`\n      },\n      failOnStatusCode: false\n    }).then(response => {\n      expect(response.status).to.be.eq(404);\n    });\n  });\n});",
               "err": {},
-              "uuid": "7f61c7aa-0788-446c-8ed8-93a6f068c831",
+              "uuid": "1e50560a-454f-4af1-98a2-7464a8cd6453",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -479,12 +488,12 @@
           "failures": [],
           "pending": [],
           "skipped": [
-            "24288c73-eb95-4f16-821e-065e8c75b019",
-            "5fc12af5-dfbf-436e-898f-b34439ea22d1",
-            "53f32e50-60d9-43a2-85f2-5389a9ff52c2",
-            "9dad2a29-ff72-4c2c-aa65-b501e60ccb4f",
-            "0a0fa2d3-f801-409b-88df-9feb0ec3393f",
-            "7f61c7aa-0788-446c-8ed8-93a6f068c831"
+            "cee0eafe-0d99-4430-8d9b-3c065bc31964",
+            "fffb4343-4704-4a75-904f-05ca37991503",
+            "3e7dc779-5793-44bc-9baa-e9de06b40d3a",
+            "387cb888-b874-42ec-94ef-eeaac1e85d09",
+            "c497701c-a86a-47c8-8af3-8ede3d361665",
+            "1e50560a-454f-4af1-98a2-7464a8cd6453"
           ],
           "duration": 0,
           "root": false,
@@ -492,7 +501,7 @@
           "_timeout": 2000
         },
         {
-          "uuid": "aa56ef2f-1a63-4eb6-8977-0c5ad6bbd251",
+          "uuid": "b7cab6c9-92b8-4fba-b5ab-ce7b9998af4c",
           "title": "POST /api/products/:productId/bids",
           "fullFile": "",
           "file": "",
@@ -512,7 +521,7 @@
               "context": null,
               "code": "cy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  body: {\n    name: \"New Product\",\n    description: \"This is a new product\",\n    category: \"Electronics\",\n    originalPrice: 99,\n    pictureUrl: \"https://example.com/product.jpg\",\n    endDate: \"2023-04-01T00:00:00.000Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
               "err": {},
-              "uuid": "4ff928ff-5caf-4f65-bedd-3f812243f679",
+              "uuid": "52a9d26d-ae5c-4a32-9ed1-955f6d410f23",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -530,7 +539,7 @@
               "context": null,
               "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    price: 42\n  }\n}).then(response => {\n  // Assert that the response is as expected\n  expect(response.status).to.eq(201);\n  expect(response.body.id).to.be.match(_pattern.UUIDv4);\n  expect(response.body.productId).to.be.match(_pattern.UUIDv4);\n  expect(response.body.price).to.be.a(\"number\");\n  expect(response.body.date).to.match(_pattern.IOS8601);\n  expect(response.body.bidderId).to.match(_pattern.UUIDv4);\n});",
               "err": {},
-              "uuid": "e824117e-cd55-48c8-a640-536d4df1eb60",
+              "uuid": "7b0fa20c-f689-4f64-a764-174e01f3ae54",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -548,7 +557,7 @@
               "context": null,
               "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    // price: 42, missing\n  },\n  failOnStatusCode: false\n}).then(req => {\n  expect(req.status).to.be.eq(400);\n  expect(req.body.error).to.be.eq(\"Invalid or missing fields\");\n  expect(req.body.details).to.exist;\n});",
               "err": {},
-              "uuid": "01558062-145b-4fee-bf6b-1f86c40a9657",
+              "uuid": "fd02013b-55e6-4ecf-a89e-b51bd51ab536",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -566,7 +575,7 @@
               "context": null,
               "code": "cy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    price: 42\n  }\n}).then(response => {\n  expect(response.status).to.be.eq(201);\n  const newBid = response.body;\n  cy.request(\"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\").then(response => {\n    const product = response.body;\n    expect(product.bids.some(bid => bid.id === newBid.id)).to.be.true;\n  });\n});",
               "err": {},
-              "uuid": "280485a3-371e-46d0-aa6c-d493d7441484",
+              "uuid": "5465b2c0-a176-47dc-95b8-dc4e55f9441e",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -577,10 +586,10 @@
           "failures": [],
           "pending": [],
           "skipped": [
-            "4ff928ff-5caf-4f65-bedd-3f812243f679",
-            "e824117e-cd55-48c8-a640-536d4df1eb60",
-            "01558062-145b-4fee-bf6b-1f86c40a9657",
-            "280485a3-371e-46d0-aa6c-d493d7441484"
+            "52a9d26d-ae5c-4a32-9ed1-955f6d410f23",
+            "7b0fa20c-f689-4f64-a764-174e01f3ae54",
+            "fd02013b-55e6-4ecf-a89e-b51bd51ab536",
+            "5465b2c0-a176-47dc-95b8-dc4e55f9441e"
           ],
           "duration": 0,
           "root": false,
@@ -588,7 +597,7 @@
           "_timeout": 2000
         },
         {
-          "uuid": "92a71b07-04dd-4d2c-bb8c-198c75b3375f",
+          "uuid": "f7ce9249-dd1d-423d-a992-d53da3c76097",
           "title": "DELETE /bids/:bidId",
           "fullFile": "",
           "file": "",
@@ -608,7 +617,7 @@
               "context": null,
               "code": "cy.request({\n  method: \"DELETE\",\n  url: endpoint,\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
               "err": {},
-              "uuid": "0731cab2-7117-40c8-92c9-194347bbebc1",
+              "uuid": "d6a97a61-6ea1-4589-9228-6f1251f1557c",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -626,7 +635,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.charlyToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
               "err": {},
-              "uuid": "e1a09a65-e1f0-40e7-a0ba-2ae4984c3aa8",
+              "uuid": "3a6f6ea6-56b7-4460-b72a-4e24928b4322",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -644,7 +653,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.bobToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 403);",
               "err": {},
-              "uuid": "124b29e6-cacc-46b8-a2e7-40ddb4903181",
+              "uuid": "651218da-ae18-4659-868b-e820e456b3a0",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -662,7 +671,7 @@
               "context": null,
               "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.adminToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
               "err": {},
-              "uuid": "8d73a127-2230-4428-835d-e224e201dd37",
+              "uuid": "f6b3eaf2-a44c-4d8c-be91-207795143568",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -680,7 +689,7 @@
               "context": null,
               "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
               "err": {},
-              "uuid": "e4955bbb-0bb5-4774-a343-61bc0483a378",
+              "uuid": "6fc6b5bc-d63e-4dbf-812f-8e32a5ed8e91",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -698,7 +707,7 @@
               "context": null,
               "code": "cy.request({\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\",\n  method: \"GET\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  }\n}).then(response => {\n  const product = response.body;\n  expect(product.bids.some(bid => bid.id === \"8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\")).to.be.true;\n  cy.request({\n    url: endpoint,\n    method: \"DELETE\",\n    headers: {\n      Authorization: `Bearer ${_tokens.charlyToken}`\n    }\n  }).then(response => {\n    expect(response.status).to.be.eq(204);\n    cy.request({\n      url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\",\n      method: \"GET\",\n      headers: {\n        Authorization: `Bearer ${_tokens.aliceToken}`\n      },\n      failOnStatusCode: false\n    }).then(response => {\n      const product = response.body;\n      expect(product.bids.some(bid => bid.id === \"8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\")).to.be.false;\n    });\n  });\n});",
               "err": {},
-              "uuid": "e81967f3-3736-4514-9d73-3dde59ddf53e",
+              "uuid": "139cf786-edb7-463d-bec1-342d22c86504",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -709,12 +718,12 @@
           "failures": [],
           "pending": [],
           "skipped": [
-            "0731cab2-7117-40c8-92c9-194347bbebc1",
-            "e1a09a65-e1f0-40e7-a0ba-2ae4984c3aa8",
-            "124b29e6-cacc-46b8-a2e7-40ddb4903181",
-            "8d73a127-2230-4428-835d-e224e201dd37",
-            "e4955bbb-0bb5-4774-a343-61bc0483a378",
-            "e81967f3-3736-4514-9d73-3dde59ddf53e"
+            "d6a97a61-6ea1-4589-9228-6f1251f1557c",
+            "3a6f6ea6-56b7-4460-b72a-4e24928b4322",
+            "651218da-ae18-4659-868b-e820e456b3a0",
+            "f6b3eaf2-a44c-4d8c-be91-207795143568",
+            "6fc6b5bc-d63e-4dbf-812f-8e32a5ed8e91",
+            "139cf786-edb7-463d-bec1-342d22c86504"
           ],
           "duration": 0,
           "root": false,
@@ -722,7 +731,7 @@
           "_timeout": 2000
         },
         {
-          "uuid": "bba4523e-6099-4afb-b006-1cea7a212822",
+          "uuid": "51054b4c-e7ba-4c9d-a657-05507d893223",
           "title": "GET /api/users/:userId",
           "fullFile": "",
           "file": "",
@@ -742,7 +751,7 @@
               "context": null,
               "code": "cy.request({\n  url: \"http://localhost:3000/api/users/not-existing-id\",\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
               "err": {},
-              "uuid": "e9b936b2-0c29-49c8-87bb-f9b2764a1ab4",
+              "uuid": "0ffcf3cd-1937-47c5-8619-6f816d78820f",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -760,7 +769,7 @@
               "context": null,
               "code": "cy.request(\"http://localhost:3000/api/users/1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\").then(response => {\n  expect(response.status).to.be.eq(200);\n  expect(response.headers[\"content-type\"]).to.contains(\"application/json\");\n  const user = response.body;\n  expect(user.id).to.eq(\"1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\");\n  expect(user.username).to.be.eq(\"alice\");\n  expect(user.admin).to.be.false;\n  for (let product of user.products) {\n    expect(product.id).to.be.a(\"string\");\n    expect(product.id).to.match(_pattern.UUIDv4);\n    expect(product.description).to.be.a(\"string\");\n    expect(product.category).to.be.a(\"string\");\n    expect(product.originalPrice).to.be.a(\"number\");\n    expect(product.pictureUrl).to.be.a(\"string\");\n    expect(product.endDate).to.be.a(\"string\");\n    expect(product.endDate).to.match(_pattern.IOS8601);\n  }\n  for (let bid of user.bids) {\n    expect(bid.id).to.be.a(\"string\");\n    expect(bid.id).to.match(_pattern.UUIDv4);\n    expect(bid.price).to.be.a(\"number\");\n    expect(bid.date).to.be.a(\"string\");\n    expect(bid.date).to.match(_pattern.IOS8601);\n    expect(bid.product.id).to.a(\"string\");\n    expect(bid.product.id).to.match(_pattern.UUIDv4);\n    expect(bid.product.name).to.a(\"string\");\n  }\n});",
               "err": {},
-              "uuid": "2c8d7a3f-e080-4a7a-bdd5-301097ab3d21",
+              "uuid": "f6821e8b-13a6-4316-94c8-8fa9f462f1b4",
               "parentUUID": null,
               "isHook": false,
               "skipped": true
@@ -771,8 +780,8 @@
           "failures": [],
           "pending": [],
           "skipped": [
-            "e9b936b2-0c29-49c8-87bb-f9b2764a1ab4",
-            "2c8d7a3f-e080-4a7a-bdd5-301097ab3d21"
+            "0ffcf3cd-1937-47c5-8619-6f816d78820f",
+            "f6821e8b-13a6-4316-94c8-8fa9f462f1b4"
           ],
           "duration": 0,
           "root": false,
