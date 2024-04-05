@@ -10,13 +10,13 @@ const router = useRouter();
 
 const productId = ref(route.params.productId);
 
-/**
- * @param {number|string|Date|VarDate} date
- */
-function formatDate(date) {
+
+function formatDate(date : Date) {
   const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date(date).toLocaleDateString("fr-FR", options);
 }
+
+
 </script>
 
 <template>

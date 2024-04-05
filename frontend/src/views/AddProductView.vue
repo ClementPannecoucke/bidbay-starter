@@ -10,6 +10,8 @@ if (!isAuthenticated.value) {
   router.push({ name: "Login" });
 }
 
+
+
 // router.push({ name: "Product", params: { productId: 'TODO } });
 </script>
 

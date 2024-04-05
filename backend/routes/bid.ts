@@ -1,12 +1,23 @@
-import authMiddleware from '../middlewares/auth'
-import { Bid, Product } from '../orm/index.js'
+import authMiddleware from '../middlewares/auth.js'
+import { Bid, Product, User } from '../orm/index.js'
 import express from 'express'
 import { getDetails } from '../validators/index.js'
 
 const router = express.Router()
 
 router.delete('/api/bids/:bidId', async (req, res) => {
-  res.status(600).send()
+  const bid = await Bid.findOne({
+    where: { id: req.params["bidId"]},
+    include : [
+      {model: User, as: 'users', attributes:["id", "username", "email", "password", "admin", "products", "bids"]}]
+  })
+
+  //TODO
+  if(bid){
+    res.status(200)
+  }else{
+    res.status(404).json({"error": "User not found"})
+  }
 })
 
 router.post('/api/products/:productId/bids', authMiddleware, async (req, res) => {
