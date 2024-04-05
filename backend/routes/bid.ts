@@ -1,9 +1,6 @@
 import authMiddleware from '../middlewares/auth.js'
-<<<<<<< HEAD
 import { Bid, Product, User } from '../orm/index.js'
-=======
-import { Bid, Product } from '../orm/index.js'
->>>>>>> aa4e72c2169ebca46db71271aeb20d85615a6887
+
 import express from 'express'
 import { getDetails } from '../validators/index.js'
 import { Request } from 'express';
