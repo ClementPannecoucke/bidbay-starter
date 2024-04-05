@@ -1,24 +1,24 @@
 {
   "stats": {
     "suites": 1,
-    "tests": 1,
+    "tests": 3,
     "passes": 0,
     "pending": 0,
-    "failures": 1,
-    "start": "2024-04-05T14:09:27.912Z",
-    "end": "2024-04-05T14:09:28.643Z",
-    "duration": 731,
+    "failures": 3,
+    "start": "2024-04-05T15:05:59.108Z",
+    "end": "2024-04-05T15:06:01.636Z",
+    "duration": 2528,
     "testsRegistered": 3,
     "passPercent": 0,
     "pendingPercent": 0,
     "other": 0,
     "hasOther": false,
-    "skipped": 2,
-    "hasSkipped": true
+    "skipped": 0,
+    "hasSkipped": false
   },
   "results": [
     {
-      "uuid": "6638b2ae-1d57-4089-b7ce-43343adf5e98",
+      "uuid": "c8f004c3-3679-4cc4-8826-42afb3d09a38",
       "title": "",
       "fullFile": "cypress\\e2e\\frontend\\add-product.cy.js",
       "file": "cypress\\e2e\\frontend\\add-product.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "669a273a-d3b7-4f15-bda2-86508c05c935",
+          "uuid": "e3949cc9-05c1-44ac-ba2b-e6ed51f2834c",
           "title": "Page /products/add",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "post product",
               "fullTitle": "Page /products/add post product",
               "timedOut": null,
-              "duration": 675,
+              "duration": 870,
               "state": "failed",
               "speed": null,
               "pass": false,
@@ -47,12 +47,12 @@
               "context": null,
               "code": "// Note : Test le scénario d'un ajout de produit réussi\ncy.visit(url, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\n(0, _orm.createProduct)().then(({\n  originalProduct,\n  product\n}) => {\n  cy.get(\"[data-test-product-name]\").type(product.name);\n  cy.get(\"[data-test-product-description]\").type(product.description);\n  cy.get(\"[data-test-product-category]\").type(product.category);\n  cy.get(\"[data-test-product-price]\").type(product.originalPrice);\n  cy.get(\"[data-test-product-picture]\").type(\"{selectAll}{del}\");\n  cy.get(\"[data-test-product-picture]\").type(product.pictureUrl);\n  cy.get(\"[data-test-product-end-date]\").type((0, _automate.prepareDateToType)(originalProduct.endDate));\n  cy.intercept(\"POST\", \"http://localhost:3000/api/products\").as(\"postProduct\");\n  cy.get(\"[data-test-submit]\").click();\n  cy.wait(\"@postProduct\").then(interception => {\n    expect(interception.response.statusCode).to.eq(201);\n    const id = interception.response.body.id;\n    cy.url().should(\"contain\", `/products/${id}`);\n  });\n});",
               "err": {
-                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.",
-                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:133151:70)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at <unknown> (http://localhost:51395/__cypress/runner/cypress_runner.js:4203:37)\n    at tryCatcher (http://localhost:51395/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:51395/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:51395/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:51395/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:51395/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:51395/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:51395/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:51395/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/frontend/add-product.cy.js:6:5)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:3000\n      at new r (<embedded>:1831:404877)\n      at ee.callback (<embedded>:1831:410878)\n      at e.callback.s.callback [as _callback] (<embedded>:1831:410324)\n      at s._callback.s.callback.s.callback (<embedded>:2049:91633)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:2049:100575)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://localhost:5173/products/add\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5173\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://localhost:5173/products/add\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5173\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n    at <unknown> (http://localhost:52490/__cypress/runner/cypress_runner.js:131065:74)\n    at visitFailedByErr (http://localhost:52490/__cypress/runner/cypress_runner.js:130463:12)\n    at <unknown> (http://localhost:52490/__cypress/runner/cypress_runner.js:131064:11)\n    at tryCatcher (http://localhost:52490/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:52490/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:52490/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:52490/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:52490/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:52490/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:52490/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:52490/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:52490/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/frontend/add-product.cy.js:15:7)\n\nFrom Node.js Internals:\n  Error: connect ECONNREFUSED 127.0.0.1:5173\n      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1495:16)",
                 "diff": null
               },
-              "uuid": "98b77d39-4a2f-4e3f-b12c-3278d0c18c0d",
-              "parentUUID": "669a273a-d3b7-4f15-bda2-86508c05c935",
+              "uuid": "77c8d58f-2338-42f1-ac4d-0f1063fc79c5",
+              "parentUUID": "e3949cc9-05c1-44ac-ba2b-e6ed51f2834c",
               "isHook": false,
               "skipped": false
             },
@@ -60,50 +60,57 @@
               "title": "display spinner",
               "fullTitle": "Page /products/add display spinner",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
+              "duration": 803,
+              "state": "failed",
               "speed": null,
               "pass": false,
-              "fail": false,
+              "fail": true,
               "pending": false,
               "context": null,
               "code": "// Note : Test la présence d'un spinner lors de l'envoi de la requête\ncy.visit(url, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\n(0, _orm.createProduct)().then(({\n  originalProduct,\n  product\n}) => {\n  cy.get(\"[data-test-product-name]\").type(product.name);\n  cy.get(\"[data-test-product-description]\").type(product.description);\n  cy.get(\"[data-test-product-category]\").type(product.category);\n  cy.get(\"[data-test-product-price]\").type(product.originalPrice);\n  cy.get(\"[data-test-product-picture]\").type(\"{selectAll}{del}\");\n  cy.get(\"[data-test-product-picture]\").type(product.pictureUrl);\n  cy.get(\"[data-test-product-end-date]\").type((0, _automate.prepareDateToType)(originalProduct.endDate));\n  cy.intercept(\"POST\", \"http://localhost:3000/api/products\", {\n    delay: 2000\n  }).as(\"postProduct\");\n  cy.get(\"[data-test-submit]\").click();\n  cy.get(\"[data-test-submit]\").should(\"have.attr\", \"disabled\");\n  cy.get(\"[data-test-spinner]\").should(\"exist\");\n});",
-              "err": {},
-              "uuid": "da1252b2-3022-4786-9950-f048ed599441",
-              "parentUUID": "669a273a-d3b7-4f15-bda2-86508c05c935",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://localhost:5173/products/add\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5173\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://localhost:5173/products/add\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5173\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n    at <unknown> (http://localhost:52490/__cypress/runner/cypress_runner.js:131065:74)\n    at visitFailedByErr (http://localhost:52490/__cypress/runner/cypress_runner.js:130463:12)\n    at <unknown> (http://localhost:52490/__cypress/runner/cypress_runner.js:131064:11)\n    at tryCatcher (http://localhost:52490/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:52490/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:52490/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:52490/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:52490/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:52490/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:52490/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:52490/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:52490/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/frontend/add-product.cy.js:51:7)\n\nFrom Node.js Internals:\n  Error: connect ECONNREFUSED 127.0.0.1:5173\n      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1495:16)",
+                "diff": null
+              },
+              "uuid": "5394e616-42d0-4dd8-b712-a77e681221ed",
+              "parentUUID": "e3949cc9-05c1-44ac-ba2b-e6ed51f2834c",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             },
             {
               "title": "display error",
               "fullTitle": "Page /products/add display error",
               "timedOut": null,
-              "duration": 0,
-              "state": "skipped",
+              "duration": 756,
+              "state": "failed",
               "speed": null,
               "pass": false,
-              "fail": false,
+              "fail": true,
               "pending": false,
               "context": null,
               "code": "// Note : Test le scénario d'un ajout de produit avec un échec\ncy.visit(url, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\ncy.get(\"[data-test-error]\").should(\"not.exist\");\n(0, _orm.createProduct)().then(({\n  originalProduct,\n  product\n}) => {\n  cy.get(\"[data-test-product-name]\").type(product.name);\n  cy.get(\"[data-test-product-description]\").type(product.description);\n  cy.get(\"[data-test-product-category]\").type(product.category);\n  cy.get(\"[data-test-product-price]\").type(product.originalPrice);\n  cy.get(\"[data-test-product-picture]\").type(\"{selectAll}{del}\");\n  cy.get(\"[data-test-product-picture]\").type(product.pictureUrl);\n  cy.get(\"[data-test-product-end-date]\").type((0, _automate.prepareDateToType)(originalProduct.endDate));\n  cy.intercept(\"POST\", \"http://localhost:3000/api/products\", {\n    statusCode: 500\n  }).as(\"postProduct\");\n  cy.get(\"[data-test-submit]\").click();\n  cy.get(\"[data-test-error]\").should(\"exist\");\n});",
-              "err": {},
-              "uuid": "0e4f76d2-2abe-486c-8d1c-5d392f9d7427",
-              "parentUUID": "669a273a-d3b7-4f15-bda2-86508c05c935",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://localhost:5173/products/add\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5173\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://localhost:5173/products/add\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5173\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n    at <unknown> (http://localhost:52490/__cypress/runner/cypress_runner.js:131065:74)\n    at visitFailedByErr (http://localhost:52490/__cypress/runner/cypress_runner.js:130463:12)\n    at <unknown> (http://localhost:52490/__cypress/runner/cypress_runner.js:131064:11)\n    at tryCatcher (http://localhost:52490/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:52490/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:52490/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:52490/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:52490/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:52490/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:52490/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:52490/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:52490/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/frontend/add-product.cy.js:80:7)\n\nFrom Node.js Internals:\n  Error: connect ECONNREFUSED 127.0.0.1:5173\n      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1495:16)",
+                "diff": null
+              },
+              "uuid": "c607aefc-c8f9-48dc-a5d6-a8b19f572eaa",
+              "parentUUID": "e3949cc9-05c1-44ac-ba2b-e6ed51f2834c",
               "isHook": false,
-              "skipped": true
+              "skipped": false
             }
           ],
           "suites": [],
           "passes": [],
           "failures": [
-            "98b77d39-4a2f-4e3f-b12c-3278d0c18c0d"
+            "77c8d58f-2338-42f1-ac4d-0f1063fc79c5",
+            "5394e616-42d0-4dd8-b712-a77e681221ed",
+            "c607aefc-c8f9-48dc-a5d6-a8b19f572eaa"
           ],
           "pending": [],
-          "skipped": [
-            "da1252b2-3022-4786-9950-f048ed599441",
-            "0e4f76d2-2abe-486c-8d1c-5d392f9d7427"
-          ],
-          "duration": 675,
+          "skipped": [],
+          "duration": 2429,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
