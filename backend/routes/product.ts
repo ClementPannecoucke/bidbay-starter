@@ -1,60 +1,40 @@
-import express from 'express'
-import { Product, Bid, User } from '../orm/index.js'
-import authMiddleware from '../middlewares/auth.js'
-import { getDetails } from '../validators/index.js'
-import { Request } from 'express';
-import { Token } from 'types/types.js';
+import express, { Request, Response } from 'express';
 
-const router = express.Router()
+import { Product, Bid, User } from './../orm/index.js';
+import authMiddleware from './../middlewares/auth.js';
+import { Token } from './../types/types';
 
-router.get('/api/products', async (req, res) => {
-  try {
-    const products = await Product.findAll({
-      include : [{model: User, as: 'seller'}, {model: Bid, as: 'bids'}]
-    });
+const router = express.Router();
 
-    if (products) {
-      res.status(200).json(products);
-    } else {
-      res.status(404).json({"error": "Products not found"});
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+router.get('/api/products', async (req: Request, res: Response): Promise<void> => {
+  const products: Product[] | null = await Product.findAll({
+    include: [
+      { model: User, as: 'seller', attributes: ['id', 'username'] },
+      { model: Bid, as: 'bids', attributes: ['id', 'price', 'date'] }
+    ]
+  });
 
-router.post('/api/products', authMiddleware, async (req: Request<Record<string,string>, any, any> & {user?: Token}, res) => {
-  const { name, description, category, originalPrice, pictureUrl, endDate} = req.body;
-  const sellerId = req.user?.id;
-
-  if (!name ||!description ||!category ||!originalPrice ||!pictureUrl ||!endDate ||!sellerId) {
-    return res.status(400).send({"error" : "Invalid or missing fields", "details" : ""});
-    req.body.details;
+  if(!products) {
+    res.status(404).json({ 'error': 'No products found' });
+    return;
   }
 
-  const newProduct = {
-    name,
-    description,
-    category,
-    originalPrice,
-    pictureUrl,
-    endDate,
-    sellerId
-  };
+  const listProducts = products.map(product => ({
+    "id": product.id,
+    "name": product.name,
+    "description": product.description,
+    "category": product.category,
+    "originalPrice": product.originalPrice,
+    "pictureUrl": product.pictureUrl,
+    "endDate": product.endDate,
+    "seller": product.seller,
+    "bids": product.bids
+  }));
 
-  Product.create(newProduct)
- .then((product) => {
-      res.status(201).json(product);
-    })
- .catch((error) => {
-      res.status(401).send(error);
-    });
+  res.status(200).json(listProducts);
 });
 
-
-// You can use the authMiddleware with req.user.id to authenticate your endpoint ;)
-
-router.get('/api/products/:productId', async (req, res) => {
+router.get('/api/products/:productId', async (req: Request, res: Response): Promise<void> => {
   const product: Product | null = await Product.findOne({
     where: { id: req.params['productId'] },
     include: [
@@ -63,7 +43,10 @@ router.get('/api/products/:productId', async (req, res) => {
     ]
   });
 
-  if(!product) return res.status(404).json( { "error": "Product not found" } );
+  if(!product) {
+    res.status(404).json( { "error": "Product not found" } );
+    return;
+  }
 
   res.status(200).json({
     "id": product.id,
@@ -76,9 +59,45 @@ router.get('/api/products/:productId', async (req, res) => {
     "seller": product.seller,
     "bids": product.bids
   });
-})
+});
 
-router.put('/api/products/:productId', authMiddleware, async (req: Request & { user?: Token }, res) => {
+// You can use the authMiddleware with req.user.id to authenticate your endpoint ;)
+
+router.post('/api/products', authMiddleware, async (req: Request & { user?: Token }, res: Response): Promise<void> => {
+  const name: string | undefined = req.body['name'];
+  const description: string | undefined = req.body['description'];
+  const pictureUrl: string | undefined = req.body['pictureUrl'];
+  const category: string | undefined = req.body['category'];
+  const originalPrice: number = + req.body['originalPrice'];
+  const endDate: string | undefined = req.body['endDate'];
+
+  if(!name || !endDate || isNaN(Date.parse(endDate))) {
+    res.status(400).json(
+      {
+        'error': 'Invalid or missing fields',
+        'details': [ 'name', 'endDate' ]
+      }
+    );
+    return;
+  }
+
+  const product: Product = await Product.create({ name, description, category, originalPrice, pictureUrl, endDate, sellerId: req.user!.id });
+
+  res.status(201).json(
+    {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      category: product.category,
+      originalPrice: product.originalPrice,
+      pictureUrl: product.pictureUrl,
+      endDate: product.endDate,
+      sellerId: product.sellerId
+    }
+  );
+});
+
+router.put('/api/products/:productId', authMiddleware, async (req: Request & { user?: Token }, res: Response): Promise<void> => {
   const name: string | undefined = req.body['name'];
   const description: string | undefined = req.body['description'];
   const pictureUrl: string | undefined = req.body['pictureUrl'];
@@ -87,31 +106,37 @@ router.put('/api/products/:productId', authMiddleware, async (req: Request & { u
   const endDate: string | undefined = req.body['endDate'];
   const sellerId: string | undefined = req.body['sellerId'];
 
-  if(!name || !endDate || isNaN(Date.parse(endDate)))
-    return res.status(400).json(
+  if(!name || !endDate || isNaN(Date.parse(endDate))) {
+    res.status(400).json(
       {
         'error': 'Invalid or missing fields',
         'details': [ 'name', 'endDate' ]
       }
     );
+    return;
+  }
 
   const product: Product | null = await Product.findOne({
     where: { id: req.params['productId'] }
   });
 
-  if(!product)
-    return res.status(404).json(
+  if(!product) {
+    res.status(404).json(
       {
         'error': 'Product not found'
       }
     );
+    return;
+  }
 
-  if(product.sellerId !== req.user!.id && !req.user!.admin)
-    return res.status(403).json(
+  if(product.sellerId !== req.user!.id && !req.user!.admin) {
+    res.status(403).json(
       {
         'error': 'Forbidden'
       }
     );
+    return;
+  }
 
   await product.update({ id: req.params['productId'], name, description, category, originalPrice, pictureUrl, endDate, sellerId })
 
@@ -127,33 +152,36 @@ router.put('/api/products/:productId', authMiddleware, async (req: Request & { u
       sellerId: product.sellerId,
     }
   );
-})
+});
 
-router.delete('/api/products/:productId', authMiddleware, async (req: Request & { user?: Token }, res) => {
+router.delete('/api/products/:productId', authMiddleware, async (req: Request & { user?: Token }, res: Response): Promise<void> => {
   const product: Product | null = await Product.findOne({
     where: { id: req.params['productId'] }
   });
 
-  if(!product)
-    return res.status(404).json(
+  if(!product) {
+    res.status(404).json(
       {
         'error': 'Product not found'
       }
     );
+    return;
+  }
 
-  if(product.sellerId !== req.user!.id && !req.user!.admin)
-    return res.status(403).json(
+  if(product.sellerId !== req.user!.id && !req.user!.admin) {
+    res.status(403).json(
       {
         'error': 'User not granted'
       }
     );
+    return;
+  }
 
   await Bid.destroy({ where: { productId: product.id } });
 
   await product.destroy();
 
   res.status(204).json();
-})
+});
 
-
-export default router
+export default router;
